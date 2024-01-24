@@ -68,10 +68,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: validation_files
-      - name: untar artifacts
-        run: |
-          ls *.tar.gz | xargs -I{} tar xzvf {}
-          rm -v *.tar.gz
       - name: run example
         run: |
           source environ.sh
