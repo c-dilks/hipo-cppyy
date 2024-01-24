@@ -64,4 +64,5 @@ axs[0].set_ylabel('$p_y$')
 axs[1].set_xlabel('$p_z$')
 for ax in axs:
     ax.set_title("$\pi^+$ Momentum Distribution")
+plt.savefig('plot.png')
 plt.show()

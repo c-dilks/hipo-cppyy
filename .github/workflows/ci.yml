@@ -1,0 +1,87 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+    tags: [ '*' ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  hipo_version: 4.0.1
+
+jobs:
+
+  download_validation_files:
+    name: Download validation files
+    runs-on: ubuntu-latest
+    steps:
+      - name: download
+        run: wget --no-check-certificate http://clasweb.jlab.org/clas12offline/distribution/clas12-timeline/validation_files.tar.gz
+      - name: untar
+        run: tar xzvf validation_files.tar.gz
+      - name: select one file
+        run: mv -v $(find validation_files -type f -name "*.hipo" | head -n1) test_data.hipo
+      - uses: actions/upload-artifact@v3
+        with:
+          name: validation_files
+          retention-days: 1
+          path: test_data.hipo
+
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        runner:
+          - ubuntu-latest
+          - macos-latest
+    runs-on: ${{ matrix.runner }}
+    needs:
+      - download_validation_files
+    steps:
+      - name: checkout hipo-cppyy
+        uses: actions/checkout@v4
+      - name: checkout hipo
+        uses: actions/checkout@v4
+        with:
+          repository: gavalian/hipo
+          ref: ${{ env.hipo_version }}
+          path: hipo
+      - name: build hipo
+        run: |
+          cmake -S hipo -B build --install-prefix=$(pwd)/install
+          cmake --build build -j4
+          cmake --install build
+      - name: install python packages
+        run: |
+          python -m venv ./venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+      - name: download test data
+        uses: actions/download-artifact@v3
+        with:
+          name: validation_files
+      - name: untar artifacts
+        run: |
+          ls *.tar.gz | xargs -I{} tar xzvf {}
+          rm -v *.tar.gz
+      - name: run example
+        run: |
+          source environ.sh
+          echo PYTHONPATH=$PYTHONPATH
+          echo PKG_CONFIG_PATH=$PKG_CONFIG_PATH
+          echo LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+          echo DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH
+          python example.py test_data.hipo
+      - uses: actions/upload-artifact@v3
+        with:
+          name: plots
+          retention-days: 7
+          path: plot.png

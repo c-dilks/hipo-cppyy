@@ -1,5 +1,6 @@
 /hipo
 /install
 /venv
-*.hipo
 __pycache__
+*.hipo
+*.png
