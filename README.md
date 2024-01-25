@@ -6,6 +6,7 @@ to the [C++ HIPO API](https://github.com/gavalian/hipo)
 
 ### 🔶 `hipo`: C++ HIPO API
 <https://github.com/gavalian/hipo>
+
 Download the latest release of HIPO (set by the `--branch` option), and install it to a local directory `./install`; [click here for the list](https://github.com/gavalian/hipo/tags) of HIPO releases, since the version used in this example will be out of date someday:
 ```bash
 git clone https://github.com/gavalian/hipo.git --branch 4.0.1
