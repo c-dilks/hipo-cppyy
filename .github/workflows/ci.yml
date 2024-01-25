@@ -63,6 +63,7 @@ jobs:
         run: |
           python -m venv ./venv
           source venv/bin/activate
+          python -m pip install pkgconfig cppyy matplotlib PyQt5
           pip install -r requirements.txt
       - name: download test data
         uses: actions/download-artifact@v3
