@@ -34,8 +34,15 @@ source venv/bin/activate
 ### 🔶 Python Packages
 Whether or not you are using a Python virtual environment or Python from the system level (run `which python` to check), install the required Python packages:
 ```
-pip install -r requirements.txt
+python -m pip install pkgconfig cppyy matplotlib PyQt5
 ```
+
+| Package      | Description                                           |
+| ---          | ---                                                   |
+| `pkgconfig`  | Python wrapper for `pkg-config` dependency resolution |
+| `cppyy`      | Automated C++ / Python bindings                       |
+| `matplotlib` | Data visualization                                    |
+| `PyQt5`      | Supports `matplotlib` usage                           |
 
 ## Run the Example
 
