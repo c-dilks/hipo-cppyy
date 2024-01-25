@@ -51,6 +51,16 @@ Sourcing `environ.sh` will also activate your Python virtual environment, if it'
 ### Try the Example
 Running with no arguments will print the usage guide:
 ```bash
-./example.py
+python ./example.py
 ```
 It will draw the momentum distribution of pions, and the plot will be saved as `plot.png`.
+
+If you want to see the plots interactively, run with `python -i`:
+```bash
+python -i ./example.py [ARGS]...
+```
+Then in the prompt, run:
+```python
+plt.show()
+```
+(you may also add this line to the Python script)

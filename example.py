@@ -65,4 +65,5 @@ axs[1].set_xlabel('$p_z$')
 for ax in axs:
     ax.set_title("$\pi^+$ Momentum Distribution")
 plt.savefig('plot.png')
-plt.show()
+print('wrote plots to plot.png')
+# plt.show() # uncomment this if you want to see the plots interactively
