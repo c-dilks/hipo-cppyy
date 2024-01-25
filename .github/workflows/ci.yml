@@ -79,6 +79,6 @@ jobs:
           python example.py test_data.hipo
       - uses: actions/upload-artifact@v3
         with:
-          name: plots
+          name: plots-${{ matrix.runner }}
           retention-days: 7
           path: plot.png
