@@ -4,6 +4,13 @@ import hipo_cppyy
 import sys
 import matplotlib.pyplot as plt
 
+#############
+# if on ifarm, some backends may not work with X11 forwarding, so use AGG instead and just write to a file;
+# if you want to see plots interactively and locally, comment out these lines and call `plt.show()` at the end
+import matplotlib
+matplotlib.use('Agg')
+#############
+
 # include the header files that you need
 hipo_cppyy.include('hipo4/reader.h')
 # then import the bound namespaces (must be after including the headers)

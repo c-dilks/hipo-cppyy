@@ -73,12 +73,4 @@ python3 ./example.py
 ```
 It will draw the momentum distribution of pions, and the plot will be saved as `plot.png`.
 
-If you want to see the plots interactively, run with `python3 -i`:
-```bash
-python3 -i ./example.py [ARGS]...
-```
-Then in the prompt, run:
-```python
-plt.show()
-```
-(you may also add this line to the Python script)
+See the script [`example.py`](example.py) for more details.
