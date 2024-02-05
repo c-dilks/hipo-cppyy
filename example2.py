@@ -46,7 +46,7 @@ while(reader.next(banks) and (numEvents==0 or iEvent < numEvents)):
     # get the event number
     evnum = configBank.getInt('event', 0)
 
-    # select 2 pi+s and an electron only
+    # select events which include exactly 2 pi+s and 1 electron; ignore other particles in this cut
     num_pions = 0
     num_electrons = 0
     for row in range(particleBank.getRows()):
@@ -57,10 +57,12 @@ while(reader.next(banks) and (numEvents==0 or iEvent < numEvents)):
     if(num_pions!=2 or num_electrons!=1):
         continue
 
-    # loop through the particle bank; if it's a pi+, add its momentum to `momentum_arr`
+    # loop through the particle bank
     for row in range(particleBank.getRows()):
+        # loop over each PID we care about
         for pid, arr0 in momentum_arr.items():
             if(particleBank.getInt('pid', row) == pid):
+                # loop over 'px', 'py', 'pz'
                 for var, arr in arr0.items():
                     momentum = particleBank.getFloat(var, row)
                     print(f'{pid} -- {var}: {momentum}')
